@@ -3,7 +3,10 @@
 #[macro_use]
 extern crate napi_derive;
 
+use std::io::Read;
+
 use lz4_flex::block::{compress_prepend_size_with_dict, decompress_size_prepended_with_dict};
+use lz4_flex::frame::FrameDecoder;
 use lz4_flex::{compress_prepend_size, decompress_size_prepended};
 use napi::{
   bindgen_prelude::{AsyncTask, Buffer},
@@ -86,6 +89,39 @@ impl Task for Dec {
 
   fn finally(&mut self, env: Env) -> Result<()> {
     if let Data::Buffer(b) = &mut self.data {
+      b.unref(env)?;
+    }
+    Ok(())
+  }
+}
+
+struct DecFrame(Dec);
+
+#[napi]
+impl Task for DecFrame {
+  type Output = Vec<u8>;
+  type JsValue = JsBuffer;
+
+  fn compute(&mut self) -> Result<Self::Output> {
+    let data: &[u8] = match self.0.data {
+      Data::Buffer(ref b) => b.as_ref(),
+      Data::String(ref s) => s.as_bytes(),
+    };
+
+    let mut decoder = FrameDecoder::new(data);
+    let mut output = vec![];
+    decoder
+      .read_to_end(&mut output)
+      .map(|_| output)
+      .map_err(|e| Error::new(Status::GenericFailure, format!("{e}))")))
+  }
+
+  fn resolve(&mut self, env: Env, output: Self::Output) -> Result<Self::JsValue> {
+    env.create_buffer_with_data(output).map(|b| b.into_raw())
+  }
+
+  fn finally(&mut self, env: Env) -> Result<()> {
+    if let Data::Buffer(b) = &mut self.0.data {
       b.unref(env)?;
     }
     Ok(())
@@ -199,6 +235,13 @@ fn uncompress(
     data: data.try_into()?,
   };
   Ok(Either::A(AsyncTask::new(decoder)))
+}
+
+#[napi]
+fn uncompress_frame(data: Either<String, JsBuffer>) -> Result<AsyncTask<DecFrame>> {
+  return Ok(AsyncTask::new(DecFrame(Dec {
+    data: data.try_into()?,
+  })));
 }
 
 #[napi]

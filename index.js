@@ -69,6 +69,7 @@ function requireNative() {
       } catch (e) {
         loadErrors.push(e)
       }
+
     } else if (process.arch === 'arm') {
       try {
         return require('./lz4-napi.android-arm-eabi.node')
@@ -80,6 +81,7 @@ function requireNative() {
       } catch (e) {
         loadErrors.push(e)
       }
+
     } else {
       loadErrors.push(new Error(`Unsupported architecture on Android ${process.arch}`))
     }
@@ -95,6 +97,7 @@ function requireNative() {
       } catch (e) {
         loadErrors.push(e)
       }
+
     } else if (process.arch === 'ia32') {
       try {
         return require('./lz4-napi.win32-ia32-msvc.node')
@@ -106,6 +109,7 @@ function requireNative() {
       } catch (e) {
         loadErrors.push(e)
       }
+
     } else if (process.arch === 'arm64') {
       try {
         return require('./lz4-napi.win32-arm64-msvc.node')
@@ -117,20 +121,21 @@ function requireNative() {
       } catch (e) {
         loadErrors.push(e)
       }
+
     } else {
       loadErrors.push(new Error(`Unsupported architecture on Windows: ${process.arch}`))
     }
   } else if (process.platform === 'darwin') {
     try {
-      return require('./lz4-napi.darwin-universal.node')
-    } catch (e) {
-      loadErrors.push(e)
-    }
-    try {
-      return require('lz4-napi-darwin-universal')
-    } catch (e) {
-      loadErrors.push(e)
-    }
+        return require('./lz4-napi.darwin-universal.node')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+      try {
+        return require('lz4-napi-darwin-universal')
+      } catch (e) {
+        loadErrors.push(e)
+      }
 
     if (process.arch === 'x64') {
       try {
@@ -143,6 +148,7 @@ function requireNative() {
       } catch (e) {
         loadErrors.push(e)
       }
+
     } else if (process.arch === 'arm64') {
       try {
         return require('./lz4-napi.darwin-arm64.node')
@@ -154,6 +160,7 @@ function requireNative() {
       } catch (e) {
         loadErrors.push(e)
       }
+
     } else {
       loadErrors.push(new Error(`Unsupported architecture on macOS: ${process.arch}`))
     }
@@ -169,6 +176,7 @@ function requireNative() {
       } catch (e) {
         loadErrors.push(e)
       }
+
     } else if (process.arch === 'arm64') {
       try {
         return require('./lz4-napi.freebsd-arm64.node')
@@ -180,6 +188,7 @@ function requireNative() {
       } catch (e) {
         loadErrors.push(e)
       }
+
     } else {
       loadErrors.push(new Error(`Unsupported architecture on FreeBSD: ${process.arch}`))
     }
@@ -187,50 +196,54 @@ function requireNative() {
     if (process.arch === 'x64') {
       if (isMusl()) {
         try {
-          return require('./lz4-napi.linux-x64-musl.node')
-        } catch (e) {
-          loadErrors.push(e)
-        }
-        try {
-          return require('lz4-napi-linux-x64-musl')
-        } catch (e) {
-          loadErrors.push(e)
-        }
+        return require('./lz4-napi.linux-x64-musl.node')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+      try {
+        return require('lz4-napi-linux-x64-musl')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+
       } else {
         try {
-          return require('./lz4-napi.linux-x64-gnu.node')
-        } catch (e) {
-          loadErrors.push(e)
-        }
-        try {
-          return require('lz4-napi-linux-x64-gnu')
-        } catch (e) {
-          loadErrors.push(e)
-        }
+        return require('./lz4-napi.linux-x64-gnu.node')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+      try {
+        return require('lz4-napi-linux-x64-gnu')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+
       }
     } else if (process.arch === 'arm64') {
       if (isMusl()) {
         try {
-          return require('./lz4-napi.linux-arm64-musl.node')
-        } catch (e) {
-          loadErrors.push(e)
-        }
-        try {
-          return require('lz4-napi-linux-arm64-musl')
-        } catch (e) {
-          loadErrors.push(e)
-        }
+        return require('./lz4-napi.linux-arm64-musl.node')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+      try {
+        return require('lz4-napi-linux-arm64-musl')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+
       } else {
         try {
-          return require('./lz4-napi.linux-arm64-gnu.node')
-        } catch (e) {
-          loadErrors.push(e)
-        }
-        try {
-          return require('lz4-napi-linux-arm64-gnu')
-        } catch (e) {
-          loadErrors.push(e)
-        }
+        return require('./lz4-napi.linux-arm64-gnu.node')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+      try {
+        return require('lz4-napi-linux-arm64-gnu')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+
       }
     } else if (process.arch === 'arm') {
       try {
@@ -243,29 +256,32 @@ function requireNative() {
       } catch (e) {
         loadErrors.push(e)
       }
+
     } else if (process.arch === 'riscv64') {
       if (isMusl()) {
         try {
-          return require('./lz4-napi.linux-riscv64-musl.node')
-        } catch (e) {
-          loadErrors.push(e)
-        }
-        try {
-          return require('lz4-napi-linux-riscv64-musl')
-        } catch (e) {
-          loadErrors.push(e)
-        }
+        return require('./lz4-napi.linux-riscv64-musl.node')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+      try {
+        return require('lz4-napi-linux-riscv64-musl')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+
       } else {
         try {
-          return require('./lz4-napi.linux-riscv64-gnu.node')
-        } catch (e) {
-          loadErrors.push(e)
-        }
-        try {
-          return require('lz4-napi-linux-riscv64-gnu')
-        } catch (e) {
-          loadErrors.push(e)
-        }
+        return require('./lz4-napi.linux-riscv64-gnu.node')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+      try {
+        return require('lz4-napi-linux-riscv64-gnu')
+      } catch (e) {
+        loadErrors.push(e)
+      }
+
       }
     } else if (process.arch === 's390x') {
       try {
@@ -278,6 +294,7 @@ function requireNative() {
       } catch (e) {
         loadErrors.push(e)
       }
+
     } else {
       loadErrors.push(new Error(`Unsupported architecture on Linux: ${process.arch}`))
     }
@@ -321,4 +338,5 @@ if (!nativeBinding) {
 module.exports.compress = nativeBinding.compress
 module.exports.compressSync = nativeBinding.compressSync
 module.exports.uncompress = nativeBinding.uncompress
+module.exports.uncompressFrame = nativeBinding.uncompressFrame
 module.exports.uncompressSync = nativeBinding.uncompressSync
