@@ -16,6 +16,8 @@ export default [
       'dist/**',
       'index.js',
       'index.d.ts',
+      'native.js',
+      'native.d.ts',
     ],
   },
   js.configs.recommended,

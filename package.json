@@ -8,8 +8,22 @@
     "url": "https://github.com/antoniomuso/lz4-napi.git"
   },
   "license": "MIT",
-  "keywords": ["napi-rs", "NAPI", "N-API", "Rust", "node-addon", "node-addon-api", "lz4", "node"],
-  "files": ["index.d.ts", "index.js"],
+  "keywords": [
+    "napi-rs",
+    "NAPI",
+    "N-API",
+    "Rust",
+    "node-addon",
+    "node-addon-api",
+    "lz4",
+    "node"
+  ],
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "native.js",
+    "native.d.ts"
+  ],
   "napi": {
     "binaryName": "lz4-napi",
     "packageName": "@antoniomuso/lz4-napi",
@@ -43,9 +57,9 @@
   "scripts": {
     "artifacts": "napi artifacts --output-dir artifacts --npm-dir ./npm",
     "bench": "node --import @oxc-node/core/register benchmark/bench.ts",
-    "build": "napi build --platform --release",
-    "build:release": "napi build --platform --release",
-    "build:debug": "napi build --platform",
+    "build": "napi build --platform --release --js native.js --dts native.d.ts",
+    "build:release": "napi build --platform --release --js native.js --dts native.d.ts",
+    "build:debug": "napi build --platform --js native.js --dts native.d.ts",
     "format": "run-p format:source format:rs format:toml",
     "format:toml": "taplo format",
     "format:rs": "cargo fmt",
@@ -80,16 +94,28 @@
     "typescript": "^5.9.3"
   },
   "lint-staged": {
-    "*.@(js|ts|tsx)": ["prettier --write", "eslint --fix"],
-    "*.@(yml|yaml)": ["prettier --parser yaml --write"],
-    "*.md": ["prettier --parser markdown --write"],
-    "*.json": ["prettier --parser json --write"]
+    "*.@(js|ts|tsx)": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.@(yml|yaml)": [
+      "prettier --parser yaml --write"
+    ],
+    "*.md": [
+      "prettier --parser markdown --write"
+    ],
+    "*.json": [
+      "prettier --parser json --write"
+    ]
   },
   "ava": {
     "extensions": {
       "ts": "module"
     },
-    "nodeArguments": ["--import", "@oxc-node/core/register"],
+    "nodeArguments": [
+      "--import",
+      "@oxc-node/core/register"
+    ],
     "timeout": "2m",
     "workerThreads": false,
     "environmentVariables": {

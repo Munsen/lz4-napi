@@ -17,22 +17,29 @@
   - [Compress](#compress)
   - [Uncompress](#uncompress)
 - [APIs](#apis)
-  - [Promises](#promises)
-    - [`compress`](#compress)
-    - [`uncompress`](#uncompress)
+  - [Promise](#promise)
+    - [`compress`](#compress-1)
+    - [`uncompress`](#uncompress-1)
+    - [`compressFrame`](#compressframe)
+    - [`decompressFrame`](#decompressframe)
   - [Sync](#sync)
     - [`compressSync`](#compresssync)
     - [`uncompressSync`](#uncompresssync)
-- [Benchmarks](#benchmarks)
+    - [`compressFrameSync`](#compressframesync)
+    - [`decompressFrameSync`](#decompressframesync)
+  - [Streaming](#streaming)
+    - [Node Stream](#node-stream)
 - [Performance](#performance)
   - [Hardware](#hardware)
-  - [Results](#results)
+  - [Benchmark](#benchmark)
 - [Contributing](#contributing)
+- [Acknowledgments](#acknowledgments)
 - [License](#license)
 
 <!-- tocstop -->
 
 <!-- GETTING STARTED -->
+
 ## Installation
 
 ```sh
@@ -109,6 +116,7 @@ const uncompressedBuffer = await uncompress(compressedBuffer)
 ```ts
 (data: Buffer | string | ArrayBuffer | Uint8Array, dict?: string | Buffer) => Buffer
 ```
+
 #### `compressFrameSync`
 
 ```ts
@@ -119,6 +127,23 @@ const uncompressedBuffer = await uncompress(compressedBuffer)
 
 ```ts
 (data: Buffer | string | ArrayBuffer | Uint8Array) => Buffer
+```
+
+### Streaming
+
+#### Node Stream
+
+```ts
+class Lz4Compress extends Transform {
+  constructor(options?: Lz4TransformOptions)
+}
+
+class Lz4Decompress extends Transform {
+  constructor(options?: Lz4TransformOptions)
+}
+
+createLz4Compress(options?: Lz4TransformOptions): Lz4Compress
+createLz4Decompress(options?: Lz4TransformOptions): Lz4Decompress
 ```
 
 ## Performance
@@ -199,6 +224,7 @@ Project is pretty simple and straight forward for what is my needs, but if you h
 5. Open a Pull Request
 
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
 - [Brooooooklyn/snappy](https://github.com/Brooooooklyn/snappy) - Inspiration and project structure
